@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'namamk',
                                     [
                                         'attribute' => "unit",
-                                        "value" => 'kurikulum.unit.namaunit'
+                                        "value" => 'namaunit'
                                     ],
                                     [
                                         'attribute' => "fakultas",
-                                        "value" => 'kurikulum.unit.fakultas.namaunit'
+                                        "value" => 'unit.fakultas.namaunit'
                                     ],
 
                                     'rata2',

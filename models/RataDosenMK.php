@@ -56,8 +56,8 @@ class RataDosenMk extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getKurikulum()
+    public function getUnit()
     {
-        return $this->hasOne(Kurikulum::className(), ['namamk' => 'namamk']);
+        return $this->hasOne(unit::className(), ['kodeunit' => 'kodeunit']);
     }
 }

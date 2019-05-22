@@ -36,7 +36,9 @@ class RataDosenMKSearch extends RataDosenMK
 
     public function getMKSiakadbyUnit($unit)
     {
-        return  (new \yii\db\Query)->select(['kodemk'])->from('akademik.ak_kurikulum')
+        return  (new \yii\db\Query)->select(['kodemk'])
+        ->distinct()
+        ->from('akademik.ak_kurikulum')
             ->innerJoin('gate.ms_unit', 'akademik.ak_kurikulum.kodeunit = gate.ms_unit.kodeunit ')
             ->where(['like', 'namaunit', $unit])
             ->all(yii::$app->db_siakad);
@@ -80,8 +82,8 @@ class RataDosenMKSearch extends RataDosenMK
             ->andFilterWhere(['like', 'namamk', $this->namamk]);
         if (!is_null($this->unit)) {
             $mk = $this->getMKSiakadbyUnit($this->unit);
-            print_r($mk);
-            die();
+            // print_r($mk);
+            //// die();
             $query->andWhere(['in','kodemk',$mk]);
         }
 
