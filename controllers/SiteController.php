@@ -3,11 +3,15 @@
 namespace app\controllers;
 
 use Yii;
+use yii\base\DynamicModel;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\RataFakultas;
+use yii\helpers\ArrayHelper;
+use app\models\RataJurusan;
 
 class SiteController extends Controller
 {
@@ -49,7 +53,39 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $data = RataFakultas::find()->select(["fakultas","rata2"])->orderBy('fakultas')-> asArray()->all();
+        $series =  ArrayHelper::getColumn($data, 'fakultas');
+        $lookup = ArrayHelper::map($data, 'fakultas', 'fakultas');
+
+        $dataseries1 =  ArrayHelper::getColumn($data, 'rata2');
+        $dataseries=array_map('floatval', $dataseries1);
+        //   die(print_r($dataseries));
+
+        $model = new DynamicModel([
+            'fakultas',
+        ]);
+        $model->addRule(['fakultas'], 'required');
+        $seriesFakultas = [];
+        $dataseriesFakultas = [];
+        if ($model->load(Yii::$app->request->post())) {
+            $data = RataJurusan::find()->select(["namaunit", "rata2"])->where(['fakultas'=>$model->fakultas])->orderBy('namaunit')->asArray()->all();
+            $seriesFakultas =  ArrayHelper::getColumn($data, 'namaunit');
+            $dataseries1 =  ArrayHelper::getColumn($data, 'rata2');
+            $dataseriesFakultas = array_map('floatval', $dataseries1);
+        }
+
+
+
+
+        return $this->render('index', [
+            'series' =>$series,
+            'dataseries' => $dataseries,
+            'seriesFakultas' => $seriesFakultas,
+            'dataseriesFakultas' => $dataseriesFakultas,
+            'lookup' => $lookup,
+
+            'model' => $model
+        ]);
     }
 
     public function actionLogin()

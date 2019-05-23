@@ -20,7 +20,7 @@ class RataDosenMKSearch extends RataDosenMK
     public function rules()
     {
         return [
-            [['periode', 'nip', 'namads', 'namamk','unit','fakultas'], 'safe'],
+            [['periode', 'nip', 'namads', 'namamk','unit','fakultas','namaunit'], 'safe'],
             [['rata2'], 'number'],
         ];
     }
@@ -34,13 +34,13 @@ class RataDosenMKSearch extends RataDosenMK
         return Model::scenarios();
     }
 
-    public function getMKSiakadbyUnit($unit)
+    public function getDataUnit($unit)
     {
-        return  (new \yii\db\Query)->select(['kodemk'])
+        return  (new \yii\db\Query)->select(['m.kodeunit'])
         ->distinct()
-        ->from('akademik.ak_kurikulum')
-            ->innerJoin('gate.ms_unit', 'akademik.ak_kurikulum.kodeunit = gate.ms_unit.kodeunit ')
-            ->where(['like', 'namaunit', $unit])
+        ->from('gate.ms_unit m')
+        ->innerJoin('gate.ms_unit m1', 'm.kodeunitparent = m1.kodeunit')
+            ->where(['like', 'lower(m1.namaunit)', $unit])
             ->all(yii::$app->db_siakad);
     }
 
@@ -79,15 +79,12 @@ class RataDosenMKSearch extends RataDosenMK
         $query->andFilterWhere(['like', 'periode', $this->periode])
             ->andFilterWhere(['like', 'nip', $this->nip])
             ->andFilterWhere(['like', 'namads', $this->namads])
-            ->andFilterWhere(['like', 'namamk', $this->namamk]);
-        if (!is_null($this->unit)) {
-            $mk = $this->getMKSiakadbyUnit($this->unit);
-            // print_r($mk);
-            //// die();
-            $query->andWhere(['in','kodemk',$mk]);
-        }
+            ->andFilterWhere(['like', 'namamk', $this->namamk])
+           ->andFilterWhere(['like', 'namaunit', $this->namaunit])
+        ->andFilterWhere(['like', 'fakultas', $this->fakultas]);
+        $query->andWhere(["periode" => yii::$app->params['periode']]);
 
-
+        $query->orderBy('kodeunit,rata2 desc');
         return $dataProvider;
     }
 }

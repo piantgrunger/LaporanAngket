@@ -1,3 +1,4 @@
+
 <?php
 
 /* @var $this \yii\web\View */
@@ -48,6 +49,9 @@ AppAsset::register($this);
             echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
+                ['label' => 'Laporan' ,'url' => '#', 'items' =>[
+                    ['label' => 'Data Angket Dosen per Mata Kuliah' ,'url' =>['rata-dosen-mk/index']],
+                ] ],
                 ['label' =>Yii::$app->user->identity->username .' - (Log Out)' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]
 
             ],

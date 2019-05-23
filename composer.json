@@ -20,8 +20,9 @@
         "yiisoft/yii2-swiftmailer": "*",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-select2": "dev-master",
-        "hscstudio/yii2-mimin": "1.1.4"
-    },
+        "hscstudio/yii2-mimin": "1.1.4",
+        "miloschuman/yii2-highcharts-widget": "^7.0"
+      },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",

@@ -24,19 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'columns' => [
                                     ['class' => 'yii\grid\SerialColumn'],
 
-                                    'periode',
+                             //       'periode',
                                     'nip',
                                     'namads',
                                     'namamk',
-                                    [
-                                        'attribute' => "unit",
-                                        "value" => 'namaunit'
-                                    ],
-                                    [
-                                        'attribute' => "fakultas",
-                                        "value" => 'unit.fakultas.namaunit'
-                                    ],
-
+                                    'namaunit',
+                                    'fakultas',
                                     'rata2',
 
                                 ],
