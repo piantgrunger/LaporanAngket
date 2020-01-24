@@ -32,7 +32,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => 'Laporan Angket UINSA',
+            'brandLabel' => 'Executive Summary UINSA',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
@@ -45,14 +45,22 @@ AppAsset::register($this);
 
 
 
-        if (!yii::$app->user->isGuest) {
+      //  if (!yii::$app->user->isGuest)
+        {
             echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Laporan' ,'url' => '#', 'items' =>[
                     ['label' => 'Data Angket Dosen per Mata Kuliah' ,'url' =>['rata-dosen-mk/index']],
+                    ['label' => 'Data Angket Dosen per Prodi' ,'url' =>['rata-dosen/index']],
+                    ['label' => 'Aspek Angket Dosen per Mata Kuliah' ,'url' =>['rata-aspek/index']],
+            
                 ] ],
-                ['label' =>Yii::$app->user->identity->username .' - (Log Out)' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]
+                 ['label' => 'Grafik' ,'url' => '#', 'items' =>[
+                    ['label' => 'Grafik Angket Dosen' ,'url' =>['site/grafik-angket']],
+                ] ],
+             
+             //   ['label' =>Yii::$app->user->identity->username .' - (Log Out)' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]
 
             ],
             ]);

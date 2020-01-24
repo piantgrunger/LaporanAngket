@@ -20,7 +20,7 @@ class RataDosenMk extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rata_dosen_mk';
+        return 'tb_rata_dosen_mk';
     }
 
     public static function primaryKey()

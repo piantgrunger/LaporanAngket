@@ -10,7 +10,7 @@ class Mahasiswa extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'akademik.ak_mahasiswa';
+        return 'akademik.ms_mahasiswa';
     }
 
     /**
@@ -20,6 +20,7 @@ class Mahasiswa extends \yii\db\ActiveRecord
     {
         return Yii::$app->get('db_siakad');
     }
+  
     public function getUnit()
     {
         return $this->hasOne(Unit::className(), ['kodeunit' => 'kodeunit']);

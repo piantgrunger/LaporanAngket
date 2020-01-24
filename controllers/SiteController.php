@@ -53,22 +53,49 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $data = RataFakultas::find()->select(["fakultas","rata2"])->orderBy('fakultas')-> asArray()->all();
-        $series =  ArrayHelper::getColumn($data, 'fakultas');
-        $lookup = ArrayHelper::map($data, 'fakultas', 'fakultas');
 
-        $dataseries1 =  ArrayHelper::getColumn($data, 'rata2');
-        $dataseries=array_map('floatval', $dataseries1);
+
+        return $this->render('index');
+    }
+  
+   public function actionGrafikAngket() {
         //   die(print_r($dataseries));
 
         $model = new DynamicModel([
             'fakultas',
         ]);
-        $model->addRule(['fakultas'], 'required');
+        $model->addRule(['fakultas'], 'safe');
+       $modelPeriode = new DynamicModel([
+            'periode',
+        ]);
+        $modelPeriode->addRule(['periode'], 'safe');
+       $modelPeriode->periode = '20191';
         $seriesFakultas = [];
         $dataseriesFakultas = [];
+     
+      
+         $data = RataFakultas::find()->select(["fakultas","rata2"])
+           ->where(['periode' => $modelPeriode->periode] )
+           ->orderBy('fakultas')-> asArray()->all();
+          $series =  ArrayHelper::getColumn($data, 'fakultas');
+        $lookup = ArrayHelper::map($data, 'fakultas', 'fakultas');
+        $dataseries1 =  ArrayHelper::getColumn($data, 'rata2');
+        $dataseries=array_map('floatval', $dataseries1);
+       
+       
+        if ($modelPeriode->load(Yii::$app->request->post())) {
+           $data = RataFakultas::find()->select(["fakultas","rata2"])
+           ->where(['periode' => $modelPeriode->periode] )
+           ->orderBy('fakultas')-> asArray()->all();
+          $series =  ArrayHelper::getColumn($data, 'fakultas');
+        $lookup = ArrayHelper::map($data, 'fakultas', 'fakultas');
+        $dataseries1 =  ArrayHelper::getColumn($data, 'rata2');
+        $dataseries=array_map('floatval', $dataseries1);
+     
+          
+        }
         if ($model->load(Yii::$app->request->post())) {
-            $data = RataJurusan::find()->select(["namaunit", "rata2"])->where(['fakultas'=>$model->fakultas])->orderBy('namaunit')->asArray()->all();
+            $data = RataJurusan::find()->select(["namaunit", "rata2"])->where(['fakultas'=>$model->fakultas , 'periode' => $modelPeriode->periode])->orderBy('namaunit')->asArray()->all();
             $seriesFakultas =  ArrayHelper::getColumn($data, 'namaunit');
             $dataseries1 =  ArrayHelper::getColumn($data, 'rata2');
             $dataseriesFakultas = array_map('floatval', $dataseries1);
@@ -77,16 +104,18 @@ class SiteController extends Controller
 
 
 
-        return $this->render('index', [
+        return $this->render('grafik-angket', [
             'series' =>$series,
             'dataseries' => $dataseries,
             'seriesFakultas' => $seriesFakultas,
             'dataseriesFakultas' => $dataseriesFakultas,
             'lookup' => $lookup,
 
-            'model' => $model
+            'model' => $model,
+            'modelPeriode' => $modelPeriode
+          
         ]);
-    }
+   }
 
     public function actionLogin()
     {

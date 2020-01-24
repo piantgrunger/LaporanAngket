@@ -18,7 +18,7 @@ class RataJurusan extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rata_jurusan';
+        return 'tb_rata_jurusan';
     }
 
     /**

@@ -17,7 +17,7 @@ class RataFakultas extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rata_fakultas';
+        return 'tb_rata_fakultas';
     }
 
     /**

@@ -31,6 +31,8 @@ return [
             ],
         ],
         'db' => $db,
+              'db_siakad' => require(__DIR__ . '/db_siakad.php'),
+
     ],
     'params' => $params,
 ];

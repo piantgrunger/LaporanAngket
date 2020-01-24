@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -18,13 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
 
-    <?php Pjax::begin(); ?> <?= GridView::widget([
-                                'dataProvider' => $dataProvider,
-                                'filterModel' => $searchModel,
-                                'columns' => [
-                                    ['class' => 'yii\grid\SerialColumn'],
+    <?php Pjax::begin(); ?>
+  
+                     
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' =>     [   ['class' => 'yii\grid\SerialColumn'],
 
-                             //       'periode',
+                    [
+    'attribute'=>'periode',
+    'filter'=>array("20181"=>"20181","20182"=>"20182"),
+],
                                     'nip',
                                     'namads',
                                     'namamk',
@@ -33,6 +38,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'rata2',
 
                                 ],
-                            ]); ?>
+        'tableOptions' => ['class' => 'table  table-bordered table-hover'],
+        'striped' => false,
+        'pjax' => true,
+        'bordered' => true,
+        'striped' => false,
+        'condensed' => false,
+        'panel' => [
+            'type' => GridView::TYPE_SUCCESS,
+    
+        ],
+            'toolbar' => [
+           '{export}',
+        '{toggleData}',
+            ],
+         'resizableColumns' => true,
+    ]); ?>
+
     <?php Pjax::end(); ?>
 </div>

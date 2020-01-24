@@ -81,9 +81,10 @@ class RataDosenSearch extends RataDosenMK
             ->andFilterWhere(['like', 'namads', $this->namads])
            ->andFilterWhere(['like', 'namaunit', $this->namaunit])
         ->andFilterWhere(['like', 'fakultas', $this->fakultas]);
-        $query->andWhere(["periode" => yii::$app->params['periode']]);
+ 
 
-        $query->orderBy('kodeunit,rata2 desc');
+        $query->orderBy('periode desc,kodeunit,rata2 desc');
+  
         return $dataProvider;
     }
 }
